@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glimpse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+
+<!-- Grain -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- Animated canvas BG -->
+<div id="video-wrap">
+  <canvas id="scrub-canvas"></canvas>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top"><img src="/assets/Glimpse-logo.gif" alt="Glimpse" style="height: 32px; width: auto;"></a>
+  <div class="nav-right">
+    <a class="nav-link" href="#projects">Work</a>
+    <a class="nav-link" href="#about">Info</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero-section" id="top">
+<h1 id="hero-text">Human<br>Ambition<br>In Motion.</h1>
+  <div class="hero-sub">
+    <p>Exploring the "why" behind our subjects' pursuits.</p>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-tick"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section class="projects-section" id="projects">
+
+  <div class="projects-grid">
+
+    <div class="proj-card" data-index="1" onclick="window.location='elladj.html'" style="cursor:pointer;">
+      <div class="proj-label">Elladj / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <img src="/assets/ElladjSmall.png" alt="Elladj" style="width:100%; height:100%; object-fit:cover;">
+          <video class="proj-video" src="/assets/ElladjPreview.mp4" muted loop playsinline></video>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Elladj</span>
+        <span class="proj-index">01</span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-index="2">
+      <div class="proj-label">Jasmine / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <img src="/assets/JasmineSmall.jpg" alt="Jasmine" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Jasmine</span>
+        <span class="proj-index">02</span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-index="3">
+      <div class="proj-label">Momo / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <img src="/assets/MomoSmall.jpg" alt="Momo" style="width:100%; height:100%; object-fit:cover;">
+          <video class="proj-video" src="/assets/MomoPreview.mp4" muted loop playsinline></video>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Momo</span>
+        <span class="proj-index">03</span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-index="4">
+      <div class="proj-label">Sondre / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <div class="proj-placeholder">
+            <div class="placeholder-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <span class="placeholder-label">Image Placeholder</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Sondre</span>
+        <span class="proj-index">04</span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-index="5">
+      <div class="proj-label">Shu / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <img src="/assets/ShuSmall.jpg" alt="Shu" style="width:100%; height:100%; object-fit:cover;">
+          <video class="proj-video" src="/assets/ShuPreview.mp4" muted loop playsinline></video>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Shu</span>
+        <span class="proj-index">05</span>
+      </div>
+    </div>
+
+    <div class="proj-card" data-index="6">
+      <div class="proj-label">Project 6 / Short Film</div>
+      <div class="proj-thumb">
+        <div class="proj-thumb-inner">
+          <div class="proj-placeholder">
+            <div class="placeholder-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <span class="placeholder-label">Image Placeholder</span>
+          </div>
+        </div>
+      </div>
+      <div class="proj-meta">
+        <span class="proj-name">Project 6</span>
+        <span class="proj-index">06</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══ ABOUT ══ -->
+<section class="about-section" id="about">
+  <div class="about-spacer"></div>
+  <div class="about-body-wrap">
+    <p class="about-body">
+      Glimpse emerged from the desire to explore and share the "why" behind human ambitions. Our approach is simple: be genuine, be real, and let the true essence of each story speak for itself.
+    </p>
+    <p class="about-body">
+      The determination and creativity of our subjects is not just compelling, but a personal call to push the boundaries of our visual narratives. Each project is an opportunity to explore what it means to chase greatness, encouraging both our team and our audience to pursue their best. By bringing these stories to light, we aim to inspire others to explore their own potential. This is the heart of Glimpse—where every story is an invitation to dream bigger and dig deeper.
+    </p>
+    <p class="about-body">
+      —<br>
+      Founded by Los Angeles-based director Mike Schwartz, Glimpse is his vision brought to life—a platform where we celebrate the depth of human ambition.
+    </p>
+  </div>
+  <div class="contact-bar">
+    <p class="contact-email">STUDIO@GLIMPSE-FILMS.COM</p>
+    <div class="contact-socials">
+      <a href="https://www.youtube.com/@glimpsefilms" target="_blank" aria-label="YouTube">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.6 31.6 0 0 0 0 12a31.6 31.6 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.6 31.6 0 0 0 24 12a31.6 31.6 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/glimpsefilms" target="_blank" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 3.9 2.3 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1.0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zm0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<footer>
+  <span class="footer-logo">Glimpse</span>
+  <span class="footer-copy">© 2025 — All Rights Reserved</span>
+</footer>
+
+<script type="module" src="/main.js"></script>
+</body>
+</html>

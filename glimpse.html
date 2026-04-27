@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glimpse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Tokens ─── */
+:root {
+  --bg:        #c8c5bf;
+  --bg-dark:   #b8b5af;
+  --ink:       #0a0a0a;
+  --graphite:  #4a4a4a;
+  --mid:       #6e6e6e;
+  --light:     #d8d5cf;
+  --card-bg:   #a8a5a0;
+  --card-dark: #888582;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── Custom cursor ─── */
+#cursor {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .2s ease, height .2s ease, background .2s ease, border-radius .2s ease;
+  will-change: left, top;
+}
+#cursor.hovered {
+  width: 36px; height: 36px;
+  background: transparent;
+  border: 1.5px solid var(--ink);
+}
+#cursor.on-dark {
+  background: #fff;
+  border-color: #fff;
+}
+
+/* ─── Film grain ─── */
+#grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation: grain 0.1s steps(1) infinite;
+}
+@keyframes grain {
+  0%  { background-position:   0px   0px; }
+  10% { background-position: -60px -90px; }
+  20% { background-position:  90px  20px; }
+  30% { background-position: -30px  70px; }
+  40% { background-position:  50px -50px; }
+  50% { background-position: -80px  30px; }
+  60% { background-position:  30px -70px; }
+  70% { background-position: -40px  90px; }
+  80% { background-position:  70px  50px; }
+  90% { background-position: -90px -40px; }
+}
+
+/* ─── Video scrub BG ─── */
+#video-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+#scrub-canvas {
+  width: 100%; height: 100%;
+  display: block;
+  opacity: 0.22;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 28px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.nav-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  pointer-events: all;
+  cursor: none;
+  text-decoration: none;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  pointer-events: all;
+}
+.nav-link {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  cursor: none;
+  text-decoration: none;
+  transition: color .2s;
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav-link:hover { color: var(--ink); }
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* ─── HERO ─── */
+.hero-section {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 36px 72px;
+}
+
+.hero-eyebrow {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+
+#hero-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(48px, 8.5vw, 118px);
+  line-height: .92;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: -.02em;
+  max-width: 900px;
+  will-change: opacity, transform;
+  transition: opacity .08s linear, transform .08s linear;
+}
+
+.hero-sub {
+  margin-top: 28px;
+  max-width: 420px;
+}
+.hero-sub p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--graphite);
+  font-weight: 400;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  right: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.scroll-indicator span {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  writing-mode: vertical-rl;
+}
+.scroll-tick {
+  width: 1px;
+  height: 40px;
+  background: var(--mid);
+  animation: tickDown 2s ease-in-out infinite;
+}
+@keyframes tickDown {
+  0%,100% { transform: scaleY(1); transform-origin: top; }
+  50%      { transform: scaleY(.4); transform-origin: bottom; }
+}
+
+/* ─── PROJECTS SECTION ─── */
+.projects-section {
+  position: relative;
+  z-index: 3;
+  padding: 0 36px 140px;
+}
+
+/* Staggered masonry-ish two-col layout */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  row-gap: 0;
+  max-width: 1100px;
+}
+
+/* Alternating vertical offsets */
+.proj-col-a { display: flex; flex-direction: column; gap: 0; padding-top: 0; }
+.proj-col-b { display: flex; flex-direction: column; gap: 0; padding-top: 120px; }
+
+/* ─── Project Card ─── */
+.proj-card {
+  position: relative;
+  cursor: none;
+  margin-bottom: 64px;
+  overflow: hidden;
+}
+
+.proj-thumb {
+  position: relative;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+/* Each card gets a unique aspect ratio for editorial variety */
+.proj-card:nth-child(1) .proj-thumb { aspect-ratio: 3/4; }
+.proj-card:nth-child(2) .proj-thumb { aspect-ratio: 4/5; }
+.proj-card:nth-child(3) .proj-thumb { aspect-ratio: 5/6; }
+
+/* Placeholder fill */
+.proj-placeholder {
+  width: 100%; height: 100%;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity .4s;
+}
+.placeholder-icon {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.placeholder-icon svg { opacity: .35; }
+.placeholder-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+
+/* Subtle gradient variation per card */
+.proj-card:nth-child(odd)  .proj-thumb { background: #9a9793; }
+.proj-card:nth-child(even) .proj-thumb { background: #8e8b87; }
+
+/* Hover scale */
+.proj-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background .4s;
+  z-index: 1;
+}
+.proj-card:hover .proj-thumb::after {
+  background: rgba(0,0,0,.18);
+}
+
+/* Hover view label */
+.proj-view {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .35s;
+}
+.proj-view-inner {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.5);
+  padding: 12px 24px;
+}
+.proj-card:hover .proj-view { opacity: 1; }
+
+/* Scale on hover */
+.proj-thumb img,
+.proj-thumb-inner {
+  width: 100%; height: 100%;
+  transition: transform .75s cubic-bezier(.25,.46,.45,.94);
+  display: block;
+}
+.proj-card:hover .proj-thumb-inner { transform: scale(1.05); }
+
+.proj-meta {
+  padding: 14px 2px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.proj-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.proj-index {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  color: var(--mid);
+  letter-spacing: .1em;
+}
+
+/* Card reveal */
+.proj-card {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.proj-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── FULL-WIDTH 5th card ─── */
+.proj-card-wide {
+  position: relative;
+  cursor: none;
+  margin-top: -20px;
+  /* spans both cols via wrapper */
+}
+.proj-card-wide .proj-thumb {
+  aspect-ratio: 16/7;
+  background: #7e7b78;
+}
+
+/* ─── ABOUT / INFO ─── */
+.about-section {
+  position: relative;
+  z-index: 3;
+  min-height: 100vh;
+  padding: 140px 36px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 36px;
+}
+.about-headline {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: -.02em;
+  margin-bottom: 32px;
+}
+.about-body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--graphite);
+  font-weight: 400;
+  margin-bottom: 18px;
+  max-width: 440px;
+}
+.about-photo-wrap {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: #888582;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.about-photo-placeholder {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+}
+.contact-block {
+  margin-top: 48px;
+}
+.contact-label {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+.contact-link {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: .06em;
+  color: var(--ink);
+  text-decoration: none;
+  margin-bottom: 12px;
+  width: fit-content;
+  cursor: none;
+  position: relative;
+}
+.contact-link::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 100%; height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.contact-link:hover::after { transform: scaleX(1); }
+
+/* ─── Divider line ─── */
+.section-divider {
+  position: relative;
+  z-index: 3;
+  height: 1px;
+  background: rgba(0,0,0,.12);
+  margin: 0 36px;
+}
+
+/* ─── Footer ─── */
+footer {
+  position: relative;
+  z-index: 3;
+  padding: 32px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.footer-copy {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--mid);
+}
+
+/* ─── Page anim ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp .8s ease forwards;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 680px) {
+  .projects-grid { grid-template-columns: 1fr; }
+  .proj-col-b { padding-top: 0; }
+  .about-section { grid-template-columns: 1fr; }
+  #hero-text { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+
+<!-- Grain -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- Animated canvas BG (replace with real video when ready) -->
+<div id="video-wrap">
+  <canvas id="scrub-canvas"></canvas>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#top">Glimpse</a>
+  <div class="nav-right">
+    <a class="nav-link" href="#projects">Work</a>
+    <a class="nav-link" href="#about">Info</a>
+    <a class="nav-link" href="mailto:hello@glimpse.film">Contact</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero-section" id="top">
+  <div class="hero-eyebrow">Documentary · Film · Photography</div>
+  <h1 id="hero-text">Human<br>Ambition<br>In Motion.</h1>
+  <div class="hero-sub">
+    <p>Exploring the "why" behind our subjects' pursuits.</p>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-tick"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section class="projects-section" id="projects">
+
+  <div class="projects-grid">
+
+    <!-- Column A -->
+    <div class="proj-col-a">
+
+      <div class="proj-card" data-index="1">
+        <div class="proj-thumb">
+          <div class="proj-thumb-inner">
+            <div class="proj-placeholder">
+              <div class="placeholder-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="placeholder-label">Image Placeholder</span>
+            </div>
+          </div>
+          <div class="proj-view"><div class="proj-view-inner">View</div></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-name">Momo</span>
+          <span class="proj-index">01</span>
+        </div>
+      </div>
+
+      <div class="proj-card" data-index="3">
+        <div class="proj-thumb">
+          <div class="proj-thumb-inner">
+            <div class="proj-placeholder">
+              <div class="placeholder-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="placeholder-label">Image Placeholder</span>
+            </div>
+          </div>
+          <div class="proj-view"><div class="proj-view-inner">View</div></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-name">Sondre</span>
+          <span class="proj-index">03</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Column B -->
+    <div class="proj-col-b">
+
+      <div class="proj-card" data-index="2">
+        <div class="proj-thumb">
+          <div class="proj-thumb-inner">
+            <div class="proj-placeholder">
+              <div class="placeholder-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="placeholder-label">Image Placeholder</span>
+            </div>
+          </div>
+          <div class="proj-view"><div class="proj-view-inner">View</div></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-name">Elladj</span>
+          <span class="proj-index">02</span>
+        </div>
+      </div>
+
+      <div class="proj-card" data-index="4">
+        <div class="proj-thumb">
+          <div class="proj-thumb-inner">
+            <div class="proj-placeholder">
+              <div class="placeholder-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="placeholder-label">Image Placeholder</span>
+            </div>
+          </div>
+          <div class="proj-view"><div class="proj-view-inner">View</div></div>
+        </div>
+        <div class="proj-meta">
+          <span class="proj-name">Jasmine</span>
+          <span class="proj-index">04</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Full-width 5th card -->
+  <div class="proj-card proj-card-wide revealed" style="opacity:0;transform:translateY(32px);transition:opacity .7s ease .3s, transform .7s ease .3s;">
+    <div class="proj-thumb">
+      <div class="proj-thumb-inner">
+        <div class="proj-placeholder">
+          <div class="placeholder-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="placeholder-label">Image Placeholder</span>
+        </div>
+      </div>
+      <div class="proj-view"><div class="proj-view-inner">View</div></div>
+    </div>
+    <div class="proj-meta">
+      <span class="proj-name">Shu</span>
+      <span class="proj-index">05</span>
+    </div>
+  </div>
+
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ══ ABOUT ══ -->
+<section class="about-section" id="about">
+  <div>
+    <div class="about-label">About</div>
+    <div class="about-headline">The Studio</div>
+    <p class="about-body">
+      Glimpse is a creative film studio documenting extraordinary people and their pursuits. We go deep — past the surface of achievement — to understand the obsession, discipline, and humanity that drives our subjects forward.
+    </p>
+    <p class="about-body">
+      Our work spans documentary film, photography, and creative direction.
+    </p>
+    <div class="contact-block">
+      <div class="contact-label">Contact</div>
+      <a class="contact-link" href="mailto:hello@glimpse.film">Email</a>
+      <a class="contact-link" href="#" target="_blank">Instagram</a>
+    </div>
+  </div>
+  <div>
+    <div class="about-photo-wrap">
+      <span class="about-photo-placeholder">Photo Placeholder</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<footer>
+  <span class="footer-logo">Glimpse</span>
+  <span class="footer-copy">© 2025 — All Rights Reserved</span>
+</footer>
+
+
+<script>
+/* ── Cursor ── */
+const cursor = document.getElementById('cursor');
+let mx = -100, my = -100;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+document.querySelectorAll('a, button, .proj-card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+});
+
+/* ── Canvas animated BG (slow drifting light) ──
+   Replace with real <video> scrub when footage is ready */
+(function() {
+  const canvas = document.getElementById('scrub-canvas');
+  const ctx = canvas.getContext('2d');
+  let frame = 0;
+  let scrollY = 0;
+
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function draw() {
+    frame++;
+    // scroll scrubs the phase
+    const t = frame * 0.003 + scrollY * 0.0015;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Dark base
+    ctx.fillStyle = '#0d0c0b';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Soft ambient light pools
+    const pools = [
+      { x: .3 + Math.sin(t * .7) * .08,  y: .4 + Math.cos(t * .5) * .1,  r: .55, a: .07 },
+      { x: .7 + Math.cos(t * .6) * .06,  y: .6 + Math.sin(t * .8) * .08, r: .45, a: .05 },
+      { x: .5 + Math.sin(t * .9) * .04,  y: .2 + Math.cos(t * .4) * .05, r: .35, a: .04 },
+    ];
+    pools.forEach(p => {
+      const grd = ctx.createRadialGradient(
+        p.x * canvas.width, p.y * canvas.height, 0,
+        p.x * canvas.width, p.y * canvas.height, p.r * Math.max(canvas.width, canvas.height)
+      );
+      grd.addColorStop(0, `rgba(220,210,195,${p.a})`);
+      grd.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── Hero text fade on scroll ── */
+const heroText = document.getElementById('hero-text');
+window.addEventListener('scroll', () => {
+  const sy = window.scrollY;
+  const vh = window.innerHeight;
+  const progress = Math.min(sy / (vh * 0.55), 1);
+  heroText.style.opacity  = 1 - progress;
+  heroText.style.transform = `translateY(${progress * -24}px)`;
+}, { passive: true });
+
+/* ── Card reveal on scroll ── */
+const cards = document.querySelectorAll('.proj-card');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      // stagger per card
+      const delay = (entry.target.dataset.index || 0) * 80;
+      setTimeout(() => {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }, delay);
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+cards.forEach(c => io.observe(c));
+
+/* ── Smooth nav link scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>

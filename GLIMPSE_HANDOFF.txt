@@ -1,0 +1,276 @@
+===============================================================
+GLIMPSE — PROJECT HANDOFF DOC
+===============================================================
+
+----------------------------------------------------------------
+WORKFLOW
+----------------------------------------------------------------
+This project is built collaboratively between Claude (claude.ai)
+and Claude Code (CC) running in the terminal. The workflow is:
+
+- Claude (claude.ai chat) acts as creative director and technical
+  translator. The human gives feedback and direction in plain
+  language. Claude interprets it and writes precise prompts for CC.
+
+- Claude Code (terminal) executes all file edits directly.
+  It reads and writes index.html, style.css, and main.js.
+
+- The human never writes code directly. They describe what they
+  want, Claude drafts the CC prompt, human pastes it into CC.
+
+- Screenshots are shared in the Claude chat when visual feedback
+  is needed. Claude reads them and adjusts the next CC prompt.
+
+- The Claude chat is for strategy, feedback, and prompt generation
+  only. CC is for execution.
+
+
+----------------------------------------------------------------
+SESSION STARTUP — PASTE INTO CC AT THE START OF EVERY SESSION
+----------------------------------------------------------------
+
+  We are resuming work on the Glimpse portfolio site.
+  The project lives at: C:/Users/Trader/Desktop/glimpse
+
+  Start the dev server:
+  npm run dev
+
+  Then read the current state of these three files and summarize
+  what you see:
+  - index.html
+  - style.css
+  - main.js
+
+  Do not make any changes yet. Just confirm the server is running
+  and report the current state of the files.
+
+
+----------------------------------------------------------------
+SESSION STARTUP — PASTE INTO CLAUDE.AI AT THE START OF EVERY SESSION
+----------------------------------------------------------------
+
+  We are resuming work on the Glimpse portfolio website.
+  I am going to paste in our handoff doc so you have full context.
+  Please read it and confirm you understand the project, the
+  workflow, and where we left off. Do not suggest any changes yet.
+  Wait for my first piece of feedback or direction.
+
+  [paste this entire document below that message]
+
+
+----------------------------------------------------------------
+PROJECT OVERVIEW
+----------------------------------------------------------------
+Client:         Glimpse — a creative film studio
+Site type:      Portfolio / showcase
+Stack:          Vite + vanilla JS, single page, no framework
+Dev server:     npm run dev → http://localhost:5173
+Build command:  npm run build → outputs to dist/
+Deployment:     Netlify via drag and drop of dist/ folder
+
+
+----------------------------------------------------------------
+FILE STRUCTURE
+----------------------------------------------------------------
+
+  glimpse/
+  ├── index.html           ← all markup
+  ├── style.css            ← all styles
+  ├── main.js              ← all JS (imports style.css)
+  ├── package.json         ← vite dev dependency
+  ├── public/
+  │   └── assets/
+  │       ├── MomoTest.png      ← Momo project thumbnail
+  │       └── Vector1.svg       ← Momo figure outline (unused for now)
+  ├── node_modules/
+  └── glimpse.html         ← original single-file reference (do not touch)
+
+
+----------------------------------------------------------------
+DESIGN TOKENS
+----------------------------------------------------------------
+
+  --bg:        #c8c5bf   (page background — warm grey)
+  --ink:       #0a0a0a   (headline black)
+  --graphite:  #4a4a4a   (subhead / body copy)
+  --mid:       #6e6e6e   (labels, metadata, muted text)
+
+  Fonts:
+  - Headlines:  Montserrat 800 — uppercase
+  - Body / UI:  Open Sans 300–600
+  - Both loaded via Google Fonts
+
+
+----------------------------------------------------------------
+WHAT IS BUILT
+----------------------------------------------------------------
+
+HERO
+- Fixed position, centered in viewport
+- Headline: "HUMAN AMBITION IN MOTION."
+  Montserrat 800, black, uppercase, centered
+- Subhead: "Exploring the 'why' behind our subjects' pursuits."
+  Open Sans, ~20px, weight 500, centered
+- Fades out and translates up as user scrolls
+  Starts fading immediately, fully gone by 50% of viewport height
+- #hero-text opacity and transform driven by scroll listener in main.js
+
+NAVIGATION
+- Fixed top — logo left, menu items right
+- Menu items stacked vertically, right-aligned
+- Font: Open Sans, 16px, weight 600, uppercase, letter-spacing .14em
+- Hover: letter-spacing expands to .64em, anchored right
+  (transform-origin: right center)
+- No underline on hover
+- Items: WORK, INFO (Contact removed)
+
+PROJECTS SECTION
+- z-index: 3, background: transparent
+  Hero text visible through gaps between cards
+- margin-top: 75vh so first card peeks above fold on load
+- padding-left: 80px to give room for vertical labels
+- Layout: display flex, flex-wrap wrap, justify-content space-between
+  This matches Mike Carson's grid system exactly
+- Card sizing:
+    Odd cards:   flex-basis 50%,  height 340px
+    Even cards:  flex-basis 32%,  height 460px,
+                 margin-top 200px, margin-left 200px
+    4n+4 cards:  margin-top 200px
+    4n+3 cards:  margin-top 0
+- margin-bottom: 360px between cards for generous negative space
+- Each card has a .proj-label — vertical text using
+  writing-mode: vertical-rl, transform: scale(-1,-1),
+  positioned left: -55px
+
+CARDS
+- .proj-thumb: overflow hidden, width 100%, height 100%
+- .proj-thumb-inner: position absolute, inset 0
+- Placeholder boxes: darker fill, image icon + label
+- Card 1 (Elladj): placeholder
+- Card 2 (Momo): real image — /assets/MomoTest.png
+- Cards 3–6: placeholders
+- Hover: image scales 1.05, dark overlay fades in, "View" appears
+- .proj-meta: project name + index number below card
+
+GRAIN
+- #grain fixed overlay, z-index 2, opacity 0.06
+- Animated SVG turbulence noise, shifts every 0.08s
+- body::after second grain layer, opacity 0.035, offset phase
+
+CANVAS BG
+- #scrub-canvas fixed, z-index 0, opacity 0.22
+- Animated ambient light pools that drift slowly
+- Scroll position fed into animation phase (simulates video scrub)
+- REPLACE with real <video> element when footage is ready
+
+CUSTOM CURSOR
+- Small dot, blooms to open ring on hover over interactive elements
+
+ABOUT / FOOTER
+- About section has solid background: var(--bg)
+  Covers hero as user scrolls past cards
+- Contact links: Email, Instagram
+
+
+----------------------------------------------------------------
+WHAT IS NEXT (in priority order)
+----------------------------------------------------------------
+
+1. Vertical text labels — .proj-label positioned left of each card
+   showing project name and type, rotated 90 degrees
+
+2. Individual project pages — click card opens project detail view
+   with large title, body copy, and image gallery
+
+3. MP4 hover previews — on card hover, muted looping video fades
+   in over the still thumbnail
+
+4. Remaining project images — client to supply:
+   Elladj, Sondre, Jasmine, Shu
+
+5. Project descriptions — client to supply copy for all 6 projects
+
+6. CMS integration — Sanity recommended, connects cleanly to Vite
+
+7. Mobile responsive pass — currently desktop only
+
+8. Final Netlify deploy
+
+
+----------------------------------------------------------------
+KEY RULES FOR CC — DO NOT VIOLATE THESE
+----------------------------------------------------------------
+
+- Always keep background: transparent on .projects-section
+  and .projects-grid
+- Never add background color to card wrappers (.proj-card,
+  .proj-thumb) — backgrounds only go on .proj-placeholder elements
+- Hero stays position: fixed — do not change to static or absolute
+- All static assets go in public/assets/ — not root assets/
+- Vite serves public/ at root — reference files as /assets/filename
+- Do not touch glimpse.html — it is the original reference only
+- Do not use CSS grid for the projects layout — it must stay flex
+
+
+----------------------------------------------------------------
+REFERENCE SITE
+----------------------------------------------------------------
+Mike Carson (mikecarson.tv) was used as the primary visual
+reference for layout, card sizing, grid rhythm, and vertical
+text labels. His grid uses the same flex wrapping system
+described above.
+
+----------------------------------------------------------------
+CURRENT CARD SIZING RULES (style.css — exact values)
+----------------------------------------------------------------
+
+Base odd/even pattern:
+
+  .proj-card:nth-child(odd) {
+    flex-basis: 50%;
+    height: 340px;
+  }
+  .proj-card:nth-child(even) {
+    flex-basis: 32%;
+    height: 460px;
+    margin-top: 200px;
+    margin-left: 200px;
+  }
+
+Row-2 margin overrides:
+
+  .proj-card:nth-child(4n+4) {
+    margin-top: 200px;
+  }
+  .proj-card:nth-child(4n+3) {
+    margin-top: 0;
+  }
+
+Explicit first-two-card overrides (Elladj = 1, Momo = 2):
+
+  .proj-card:nth-child(1) {
+    flex-basis: 32%;
+    height: 460px;
+    margin-top: 0;
+    margin-left: 0;
+  }
+  .proj-card:nth-child(2) {
+    flex-basis: 50%;
+    height: 340px;
+    margin-top: 200px;
+    margin-left: 0;
+    margin-bottom: 180px;
+  }
+
+DOM ORDER (index.html)
+  1. Elladj    (data-index="2") — tall/narrow,      32% / 460px
+  2. Momo      (data-index="1") — wide/landscape,   50% / 340px
+  3. Sondre    (data-index="3")
+  4. Jasmine   (data-index="4")
+  5. Shu       (data-index="5")
+  6. Project 6 (data-index="6")
+
+
+===============================================================
+END OF HANDOFF DOC
+===============================================================
