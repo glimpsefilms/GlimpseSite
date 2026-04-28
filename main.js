@@ -30,47 +30,49 @@ document.querySelectorAll('a, button, .proj-card').forEach(el => {
 /* ── Canvas animated BG ── */
 (function() {
   const canvas = document.getElementById('scrub-canvas');
-  const ctx = canvas.getContext('2d');
-  let frame = 0;
-  let scrollY = 0;
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let frame = 0;
+    let scrollY = 0;
 
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
 
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
 
-  function draw() {
-    frame++;
-    const t = frame * 0.003 + scrollY * 0.0015;
+    function draw() {
+      frame++;
+      const t = frame * 0.003 + scrollY * 0.0015;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = '#0d0c0b';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    const pools = [
-      { x: .3 + Math.sin(t * .7) * .08,  y: .4 + Math.cos(t * .5) * .1,  r: .55, a: .07 },
-      { x: .7 + Math.cos(t * .6) * .06,  y: .6 + Math.sin(t * .8) * .08, r: .45, a: .05 },
-      { x: .5 + Math.sin(t * .9) * .04,  y: .2 + Math.cos(t * .4) * .05, r: .35, a: .04 },
-    ];
-    pools.forEach(p => {
-      const grd = ctx.createRadialGradient(
-        p.x * canvas.width, p.y * canvas.height, 0,
-        p.x * canvas.width, p.y * canvas.height, p.r * Math.max(canvas.width, canvas.height)
-      );
-      grd.addColorStop(0, `rgba(220,210,195,${p.a})`);
-      grd.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = grd;
+      ctx.fillStyle = '#0d0c0b';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-    });
 
-    requestAnimationFrame(draw);
+      const pools = [
+        { x: .3 + Math.sin(t * .7) * .08,  y: .4 + Math.cos(t * .5) * .1,  r: .55, a: .07 },
+        { x: .7 + Math.cos(t * .6) * .06,  y: .6 + Math.sin(t * .8) * .08, r: .45, a: .05 },
+        { x: .5 + Math.sin(t * .9) * .04,  y: .2 + Math.cos(t * .4) * .05, r: .35, a: .04 },
+      ];
+      pools.forEach(p => {
+        const grd = ctx.createRadialGradient(
+          p.x * canvas.width, p.y * canvas.height, 0,
+          p.x * canvas.width, p.y * canvas.height, p.r * Math.max(canvas.width, canvas.height)
+        );
+        grd.addColorStop(0, `rgba(220,210,195,${p.a})`);
+        grd.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      });
+
+      requestAnimationFrame(draw);
+    }
+    draw();
   }
-  draw();
 })();
 
 /* ── Hero fade on scroll ── */
