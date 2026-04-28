@@ -108,7 +108,7 @@ const io = new IntersectionObserver((entries) => {
 cards.forEach(c => io.observe(c));
 
 /* ── Video hover previews ── */
-document.querySelectorAll('.proj-card').forEach(card => {
+document.querySelectorAll('.proj-card:not(:nth-child(1))').forEach(card => {
   const video = card.querySelector('.proj-video');
   if (!video) return;
   card.addEventListener('mouseenter', () => video.play());
