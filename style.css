@@ -375,7 +375,6 @@ nav {
   font-weight: 700;
   font-size: 15px;
   letter-spacing: .06em;
-  text-transform: uppercase;
   color: var(--ink);
 }
 .proj-runtime {
@@ -607,10 +606,10 @@ footer {
 .proj-title {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: clamp(40px, 7vw, 98px);
+  font-size: clamp(24px, 4.2vw, 59px);
   line-height: 0.9;
   letter-spacing: -0.02em;
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--ink);
   margin: 0 0 30px 0;
 }
@@ -656,6 +655,13 @@ footer {
   font-weight: 400;
   color: var(--mid);
   margin-top: 16px;
+}
+
+.proj-photo-main:not([src]) {
+  display: block;
+  width: 100%;
+  min-height: 500px;
+  background: var(--card-bg, #a8a5a0);
 }
 
 .proj-back-bottom {
@@ -870,6 +876,7 @@ footer {
   #hero-text {
     width: 90%;
     padding: 0 20px;
+    font-size: clamp(20px, 5.5vw, 28px);
   }
 
   #hero-text h1 {
