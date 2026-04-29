@@ -78,12 +78,18 @@ FILE STRUCTURE
 ----------------------------------------------------------------
 
   glimpse/
-  ├── index.html           ← all markup
-  ├── elladj.html          ← Elladj project page
+  ├── index.html           ← homepage markup
+  ├── elladj.html          ← Elladj project page (real copy + credits)
+  ├── jasmine.html         ← Jasmine project page (placeholder)
+  ├── momo.html            ← Momo project page (placeholder)
+  ├── shu.html             ← Shu project page (placeholder)
+  ├── sondre.html          ← Sondre project page (placeholder)
+  ├── annika.html          ← Annika project page (placeholder)
   ├── style.css            ← all styles
   ├── main.js              ← all JS (imports style.css)
-  ├── vite.config.js       ← multi-page build config
-  ├── package.json         ← vite dev dependency
+  ├── vite.config.js       ← multi-page build config (lists all HTML inputs)
+  ├── vercel.json          ← cleanUrls + outputDirectory: "dist"
+  ├── package.json         ← vite + lenis dependencies
   ├── .gitignore           ← excludes node_modules, dist, .env
   ├── public/
   │   └── assets/
@@ -96,7 +102,7 @@ FILE STRUCTURE
 DESIGN TOKENS
 ----------------------------------------------------------------
 
-  --bg:        #c8c5bf   (page background — warm grey)
+  --bg:        #d4d4d4   (page background — warm grey)
   --ink:       #0a0a0a   (headline black)
   --graphite:  #4a4a4a   (subhead / body copy)
   --mid:       #6e6e6e   (labels, metadata, muted text)
@@ -113,13 +119,16 @@ WHAT IS BUILT
 
 HERO
 - Fixed position, centered in viewport
-- Headline: "HUMAN AMBITION IN MOTION."
-  Montserrat 800, black, uppercase, centered
-- Subhead: "Exploring the 'why' behind our subjects' pursuits."
-  Open Sans, ~20px, weight 500, centered
-- Fades out and translates up as user scrolls
+- Headline (two-stanza, line-break separated):
+    "We make documentary films
+     driven by people, shaped by ambition."
+  Montserrat 700, black, uppercase, centered
+- font-size: clamp(28px, 4vw, 56px)
+- No subhead
+- Fades out as user scrolls
   Starts fading immediately, fully gone by 50% of viewport height
-- #hero-text opacity and transform driven by scroll listener in main.js
+- #hero-text opacity driven by scroll listener in main.js
+  (listener guarded with if (heroSection) so project pages don't throw)
 
 NAVIGATION
 - Fixed top — logo left, menu items right
@@ -153,12 +162,16 @@ CARDS
 - .proj-thumb: overflow hidden, width 100%, height 100%
 - .proj-thumb-inner: position absolute, inset 0
 - Placeholder boxes: darker fill, image icon + label
-- Card 1 (Elladj):  real image /assets/ElladjSmall.png + hover video /assets/ElladjPreview.mp4
-- Card 2 (Jasmine): real image /assets/JasmineSmall.jpg, no hover video yet
-- Card 3 (Momo):    real image /assets/MomoSmall.jpg + hover video /assets/MomoPreview.mp4
-- Card 4 (Sondre):  placeholder
-- Card 5 (Shu):     real image /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4
-- Card 6:           placeholder
+- Card 1 (Elladj):  autoplay looping video /assets/ElladjPreview.mp4 (no still),
+                    links to elladj.html
+- Card 2 (Jasmine): real image /assets/JasmineSmall.jpg,
+                    links to jasmine.html
+- Card 3 (Momo):    real image /assets/MomoSmall.jpg + hover video /assets/MomoPreview.mp4,
+                    links to momo.html
+- Card 4 (Sondre):  placeholder, links to sondre.html
+- Card 5 (Shu):     real image /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4,
+                    links to shu.html
+- Card 6 (Annika):  placeholder, links to annika.html
 - Hover: image scales 1.05, dark overlay fades in, hover video crossfades over still
 - .proj-meta: project name + index number below card
 
@@ -187,13 +200,46 @@ INFO / ABOUT (rebuilt)
 - Contact bar: STUDIO@GLIMPSE-FILMS.COM + YouTube + Instagram icons
 - Covers hero as user scrolls past cards
 
-ELLADJ PROJECT PAGE
-- elladj.html — first project detail page, built and linked from card 1
-- Layout: sticky left reel (logo + Info link) + content wrapper
-- Includes back link, client name, big title, type/credits column,
-  body copy, main image, second back link
-- Loaded as a separate Vite entry via vite.config.js
-- Template for the remaining project pages
+PROJECT PAGES
+- Six project pages exist: elladj.html, jasmine.html, momo.html, shu.html,
+  sondre.html, annika.html. Each homepage card routes to its detail page
+  via an inline onclick='window.location=...' on .proj-card.
+- Each page is a Vite entry (see vite.config.js > rollupOptions.input)
+  and is emitted to dist/ on `npm run build`.
+- vercel.json sets cleanUrls: true so /elladj, /momo, etc. work without
+  the .html suffix on the deployed site.
+
+TEMPLATE STRUCTURE (every project page)
+- .proj-page-wrap (flex container)
+    .left-reel (sticky sidebar, desktop only)
+      - Glimpse logo (links home)
+      - "Info" link (links to /#about)
+    .content-wrapper
+      - Top "← BACK TO PROJECTS" link
+      - <h1 class="proj-title">
+      - <img class="proj-photo-main"> (or no src for placeholder block)
+      - .proj-desc-block
+          .proj-type     — directed/produced credit line
+          p.proj-text    — body copy
+      - dl.proj-credits  — role/name pairs in two-column grid
+      - Bottom "← BACK TO PROJECTS" link
+
+CONTENT STATUS
+- elladj.html — REAL: title "Wild Ice: Elladj Baldé", real body copy,
+  full 11-row credits block, image /assets/ElladjSmall.png
+- jasmine.html, momo.html, shu.html — PLACEHOLDER: real images, lorem
+  body copy, six generic credit rows ("Director / Name", etc.)
+- sondre.html, annika.html — PLACEHOLDER: no image (renders 500px
+  --card-bg block via .proj-photo-main:not([src]) rule), lorem copy,
+  generic credits
+
+RESPONSIVE
+- Desktop (>1100px): two-column with sticky left-reel sidebar
+- Tablet (≤1100px): left-reel hidden, single-column, padding 40px,
+  credit rows tighten to 180px / 1fr
+- Mobile (≤479px): same single-column, padding 16px, credit rows
+  collapse to single column (role stacked above name), title scales
+  down further
 
 RESPONSIVE
 - Tablet breakpoint: 768px — scaled stagger layout, cards still offset
@@ -201,7 +247,7 @@ RESPONSIVE
 - Mobile breakpoint: 430px — single column stack, all cards full width,
   vertical labels hidden
 - Glassy frosted nav on mobile and tablet:
-  background rgba(200,197,191,0.75) + backdrop-filter blur(8px),
+  background rgba(212,212,212,0.75) + backdrop-filter blur(8px),
   pinned top, items laid out in a row
 
 
@@ -209,22 +255,27 @@ RESPONSIVE
 WHAT IS NEXT (in priority order)
 ----------------------------------------------------------------
 
-1. Remaining project pages: Jasmine, Momo, Sondre, Shu
-   (follow elladj.html as template)
+DONE
+- Individual project pages — all 6 built (elladj, jasmine, momo, shu, sondre, annika).
+  elladj.html has full real copy, full credits block, and real image.
+  All other pages are placeholder templates awaiting client copy and images.
+- All project pages registered in vite.config.js as build inputs.
+- MP4 hover/autoplay previews — Elladj (autoplay looping), Momo (hover), Shu (hover).
+- Vertical text labels on cards.
+- Mobile + tablet responsive pass on project pages.
 
-2. Add each new project page to vite.config.js inputs
+REMAINING (in priority order)
+1. Real copy for remaining project pages (client to supply): Jasmine, Momo, Sondre, Shu, Annika
 
-3. Real copy for all project pages (client to supply)
+2. Remaining images: Sondre, Annika (real images and/or hero stills)
 
-4. Remaining images: Sondre, card 6
+3. Optional hover videos: Jasmine, Sondre, Annika
 
-5. Mobile responsive pass on elladj.html
+4. Client upgrade Vercel to Pro for team access
 
-6. Client upgrade Vercel to Pro for team access
+5. Custom domain setup on Vercel
 
-7. Custom domain setup on Vercel
-
-8. Final QA pass before launch
+6. Final QA pass before launch
 
 
 ----------------------------------------------------------------
@@ -254,6 +305,14 @@ described above.
 CURRENT CARD SIZING RULES (style.css — exact values)
 ----------------------------------------------------------------
 
+Base card rule:
+
+  .proj-card {
+    position: relative;
+    cursor: none;
+    margin-bottom: 50px;
+  }
+
 Base odd/even pattern:
 
   .proj-card:nth-child(odd) {
@@ -263,42 +322,51 @@ Base odd/even pattern:
   .proj-card:nth-child(even) {
     flex-basis: 32%;
     height: 460px;
-    margin-top: 200px;
-    margin-left: 200px;
+    margin-top: 160px;
+    margin-left: 160px;
   }
 
 Row-2 margin overrides:
 
   .proj-card:nth-child(4n+4) {
-    margin-top: 200px;
+    margin-top: 160px;
   }
   .proj-card:nth-child(4n+3) {
     margin-top: 0;
   }
 
-Explicit first-two-card overrides (Elladj = 1, Momo = 2):
+Explicit per-card overrides (current DOM order):
 
+  /* Card 1 — Elladj. Inherits odd's flex-basis: 50%, overrides height,
+     resets margins so first card sits flush. */
   .proj-card:nth-child(1) {
-    flex-basis: 32%;
-    height: 460px;
+    height: 338px;
     margin-top: 0;
     margin-left: 0;
   }
+
+  /* Card 2 — Jasmine. Matches even pattern explicitly + adds bottom margin. */
   .proj-card:nth-child(2) {
-    flex-basis: 50%;
-    height: 340px;
-    margin-top: 200px;
-    margin-left: 0;
-    margin-bottom: 180px;
+    flex-basis: 32%;
+    height: 460px;
+    margin-top: 160px;
+    margin-left: 160px;
+    margin-bottom: 50px;
+  }
+
+  /* Card 5 — Shu. Inherits odd's flex-basis: 50%, overrides height
+     to a shorter panoramic ratio. */
+  .proj-card:nth-child(5) {
+    height: 252px;
   }
 
 DOM ORDER (index.html)
-  1. Elladj    (data-index="2") — tall/narrow,      32% / 460px
-  2. Momo      (data-index="1") — wide/landscape,   50% / 340px
-  3. Sondre    (data-index="3")
-  4. Jasmine   (data-index="4")
-  5. Shu       (data-index="5")
-  6. Project 6 (data-index="6")
+  1. Elladj   (data-index="1") — autoplay video,           links to elladj.html
+  2. Jasmine  (data-index="2") — real image,               links to jasmine.html
+  3. Momo     (data-index="3") — real image + hover video, links to momo.html
+  4. Sondre   (data-index="4") — placeholder,              links to sondre.html
+  5. Shu      (data-index="5") — real image + hover video, links to shu.html
+  6. Annika   (data-index="6") — placeholder,              links to annika.html
 
 
 ===============================================================
