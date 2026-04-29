@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/elladj", "destination": "/elladj.html" },
+    { "source": "/momo", "destination": "/momo.html" },
+    { "source": "/shu", "destination": "/shu.html" },
+    { "source": "/jasmine", "destination": "/jasmine.html" },
+    { "source": "/sondre", "destination": "/sondre.html" },
+    { "source": "/annika", "destination": "/annika.html" }
+  ]
+}
