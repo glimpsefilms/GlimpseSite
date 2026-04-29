@@ -78,19 +78,21 @@ document.querySelectorAll('a, button, .proj-card').forEach(el => {
 /* ── Hero fade on scroll ── */
 const heroSection = document.querySelector('.hero-section');
 
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      const sy = window.scrollY;
-      const vh = window.innerHeight;
+if (heroSection) {
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const sy = window.scrollY;
+        const vh = window.innerHeight;
 
-      heroSection.style.opacity = 1 - Math.min(sy / (vh * 0.50), 1);
-      ticking = false;
-    });
-    ticking = true;
-  }
-}, { passive: true });
+        heroSection.style.opacity = 1 - Math.min(sy / (vh * 0.50), 1);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+}
 
 /* ── Card reveal on scroll ── */
 const cards = document.querySelectorAll('.proj-card');
