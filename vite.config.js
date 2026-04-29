@@ -7,6 +7,11 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         elladj: resolve(__dirname, 'elladj.html'),
+        momo: resolve(__dirname, 'momo.html'),
+        jasmine: resolve(__dirname, 'jasmine.html'),
+        shu: resolve(__dirname, 'shu.html'),
+        sondre: resolve(__dirname, 'sondre.html'),
+        annika: resolve(__dirname, 'annika.html'),
       }
     }
   }
