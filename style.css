@@ -663,6 +663,37 @@ footer {
   margin-bottom: 80px;
 }
 
+.proj-credits {
+  margin-top: 60px;
+  width: 100%;
+}
+.proj-credit-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 60px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(0, 0, 0, .12);
+}
+.proj-credit-row:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+.proj-credit-row dt {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+.proj-credit-row dd {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  margin: 0;
+}
+
 @media screen and (max-width: 1100px) {
 
   nav, .nav, header {
