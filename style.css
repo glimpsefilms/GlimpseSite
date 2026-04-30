@@ -1054,6 +1054,8 @@ footer {
 
   .proj-credit-row {
     grid-template-columns: 1fr;
+    gap: 2px;
+    margin-bottom: 12px;
   }
 
 }
