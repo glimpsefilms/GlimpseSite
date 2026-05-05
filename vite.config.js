@@ -13,7 +13,8 @@ export default defineConfig({
         sondre: resolve(__dirname, 'sondre.html'),
         annika: resolve(__dirname, 'annika.html'),
         mattshilan: resolve(__dirname, 'mattshilan.html'),
-        project8: resolve(__dirname, 'project8.html'),
+        austinfarwell: resolve(__dirname, 'austinfarwell.html'),
+        elladj2: resolve(__dirname, 'elladj2.html'),
       }
     }
   }
