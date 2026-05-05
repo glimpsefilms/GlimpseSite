@@ -85,9 +85,12 @@ FILE STRUCTURE
   ├── shu.html             ← Shu project page (placeholder)
   ├── sondre.html          ← Sondre project page (placeholder)
   ├── annika.html          ← Annika project page (placeholder)
+  ├── mattshilan.html      ← Matt Shilan project page (placeholder)
+  ├── austinfarwell.html   ← Austin Farwell project page (placeholder)
+  ├── elladj2.html         ← Elladj (card 9) project page (placeholder)
   ├── style.css            ← all styles
   ├── main.js              ← all JS (imports style.css)
-  ├── vite.config.js       ← multi-page build config (lists all HTML inputs)
+  ├── vite.config.js       ← multi-page build config (10 entries: index + 9 project pages)
   ├── vercel.json          ← cleanUrls + outputDirectory: "dist"
   ├── package.json         ← vite + lenis dependencies
   ├── .gitignore           ← excludes node_modules, dist, .env
@@ -162,16 +165,24 @@ CARDS
 - .proj-thumb: overflow hidden, width 100%, height 100%
 - .proj-thumb-inner: position absolute, inset 0
 - Placeholder boxes: darker fill, image icon + label
-- Card 1 (Elladj):  autoplay looping video /assets/ElladjPreview.mp4 (no still),
-                    links to elladj.html
-- Card 2 (Jasmine): real image /assets/JasmineSmall.jpg,
-                    links to jasmine.html
-- Card 3 (Momo):    real image /assets/MomoSmall.jpg + hover video /assets/MomoPreview.mp4,
-                    links to momo.html
-- Card 4 (Sondre):  placeholder, links to sondre.html
-- Card 5 (Shu):     real image /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4,
-                    links to shu.html
-- Card 6 (Annika):  placeholder, links to annika.html
+- Card 1 (Elladj / Wild Ice): autoplay looping video /assets/ElladjPreview.mp4 (no still),
+                              links to elladj.html
+- Card 2 (Jasmine):           thumb /assets/jasmine-thumb.jpg + hover video /assets/jasmine_loop.mp4,
+                              links to jasmine.html
+- Card 3 (Momo):              thumb /assets/MomoSmall.jpg + hover video /assets/MomoPreview.mp4,
+                              links to momo.html
+- Card 4 (Sondre):            thumb /assets/sondre_thumb.jpg + hover video /assets/SONDRE_loop.mp4,
+                              links to sondre.html
+- Card 5 (Shu):               thumb /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4,
+                              links to shu.html
+- Card 6 (Annika):            thumb /assets/Annika_thumb4x5.jpg + hover video /assets/Annika_loop_4x5.mp4,
+                              links to annika.html
+- Card 7 (Matt Shilan):       thumb /assets/matt_thumb.jpg + hover video /assets/matt_loop.mp4,
+                              links to mattshilan.html
+- Card 8 (Austin Farwell):    thumb /assets/Austin_thumb.jpg + hover video /assets/Austin_loop.mp4,
+                              links to austinfarwell.html
+- Card 9 (Elladj):            thumb /assets/elladj_thumb.jpg + hover video /assets/elladj_loop.mp4,
+                              links to elladj2.html
 - Hover: image scales 1.05, dark overlay fades in, hover video crossfades over still
 - .proj-meta: project name + index number below card
 
@@ -201,11 +212,13 @@ INFO / ABOUT (rebuilt)
 - Covers hero as user scrolls past cards
 
 PROJECT PAGES
-- Six project pages exist: elladj.html, jasmine.html, momo.html, shu.html,
-  sondre.html, annika.html. Each homepage card routes to its detail page
-  via an inline onclick='window.location=...' on .proj-card.
-- Each page is a Vite entry (see vite.config.js > rollupOptions.input)
-  and is emitted to dist/ on `npm run build`.
+- Nine project pages exist: elladj.html, jasmine.html, momo.html, shu.html,
+  sondre.html, annika.html, mattshilan.html, austinfarwell.html, elladj2.html.
+  Each homepage card routes to its detail page via an inline
+  onclick='window.location=...' on .proj-card.
+- Each page is a Vite entry (see vite.config.js > rollupOptions.input — 10
+  entries total: main + 9 project pages) and is emitted to dist/ on
+  `npm run build`.
 - vercel.json sets cleanUrls: true so /elladj, /momo, etc. work without
   the .html suffix on the deployed site.
 
@@ -225,13 +238,16 @@ TEMPLATE STRUCTURE (every project page)
       - Bottom "← BACK TO PROJECTS" link
 
 CONTENT STATUS
-- elladj.html — REAL: title "Wild Ice: Elladj Baldé", real body copy,
-  full 11-row credits block, image /assets/ElladjSmall.png
-- jasmine.html, momo.html, shu.html — PLACEHOLDER: real images, lorem
-  body copy, six generic credit rows ("Director / Name", etc.)
-- sondre.html, annika.html — PLACEHOLDER: no image (renders 500px
-  --card-bg block via .proj-photo-main:not([src]) rule), lorem copy,
-  generic credits
+- elladj.html       — REAL: title "Wild Ice: Elladj Baldé", real body copy,
+                      full 11-row credits block, image /assets/ElladjSmall.png
+- jasmine.html      — has real video asset, lorem copy, placeholder credits
+- momo.html         — has real image + hover video, lorem copy, placeholder credits
+- shu.html          — has real image + hover video, lorem copy, placeholder credits
+- sondre.html       — has real assets, lorem copy, placeholder credits
+- annika.html       — has real assets, lorem copy, placeholder credits
+- mattshilan.html   — has real video asset, lorem copy, placeholder credits
+- austinfarwell.html — has real video asset, lorem copy, placeholder credits
+- elladj2.html      — has real video asset, lorem copy, placeholder credits
 
 RESPONSIVE
 - Desktop (>1100px): two-column with sticky left-reel sidebar
@@ -256,26 +272,24 @@ WHAT IS NEXT (in priority order)
 ----------------------------------------------------------------
 
 DONE
-- Individual project pages — all 6 built (elladj, jasmine, momo, shu, sondre, annika).
-  elladj.html has full real copy, full credits block, and real image.
-  All other pages are placeholder templates awaiting client copy and images.
-- All project pages registered in vite.config.js as build inputs.
-- MP4 hover/autoplay previews — Elladj (autoplay looping), Momo (hover), Shu (hover).
+- Individual project pages — all 9 built (elladj, jasmine, momo, shu, sondre,
+  annika, mattshilan, austinfarwell, elladj2). elladj.html has full real copy,
+  full credits block, and real image. All other pages are placeholder
+  templates awaiting client copy.
+- All project pages registered in vite.config.js as build inputs (10 total).
+- MP4 hover/autoplay previews — Elladj card 1 (autoplay looping), all other
+  cards (hover-play with thumb still underneath).
 - Vertical text labels on cards.
 - Mobile + tablet responsive pass on project pages.
 
 REMAINING (in priority order)
-1. Real copy for remaining project pages (client to supply): Jasmine, Momo, Sondre, Shu, Annika
+1. Real copy for all project pages except elladj (client to supply)
 
-2. Remaining images: Sondre, Annika (real images and/or hero stills)
+2. Final spacing tweaks (client feedback pending)
 
-3. Optional hover videos: Jasmine, Sondre, Annika
+3. Custom domain setup on Vercel
 
-4. Client upgrade Vercel to Pro for team access
-
-5. Custom domain setup on Vercel
-
-6. Final QA pass before launch
+4. Final QA pass before launch
 
 
 ----------------------------------------------------------------
@@ -361,12 +375,15 @@ Explicit per-card overrides (current DOM order):
   }
 
 DOM ORDER (index.html)
-  1. Elladj   (data-index="1") — autoplay video,           links to elladj.html
-  2. Jasmine  (data-index="2") — real image,               links to jasmine.html
-  3. Momo     (data-index="3") — real image + hover video, links to momo.html
-  4. Sondre   (data-index="4") — placeholder,              links to sondre.html
-  5. Shu      (data-index="5") — real image + hover video, links to shu.html
-  6. Annika   (data-index="6") — placeholder,              links to annika.html
+  1. Elladj (Wild Ice) (data-index="1") — autoplay video ElladjPreview.mp4,        links to elladj.html
+  2. Jasmine           (data-index="2") — jasmine-thumb.jpg + jasmine_loop.mp4,    links to jasmine.html
+  3. Momo              (data-index="3") — MomoSmall.jpg + MomoPreview.mp4,         links to momo.html
+  4. Sondre            (data-index="4") — sondre_thumb.jpg + SONDRE_loop.mp4,      links to sondre.html
+  5. Shu               (data-index="5") — ShuSmall.jpg + ShuPreview.mp4,           links to shu.html
+  6. Annika            (data-index="6") — Annika_thumb4x5.jpg + Annika_loop_4x5.mp4, links to annika.html
+  7. Matt Shilan       (data-index="7") — matt_thumb.jpg + matt_loop.mp4,          links to mattshilan.html
+  8. Austin Farwell    (data-index="8") — Austin_thumb.jpg + Austin_loop.mp4,      links to austinfarwell.html
+  9. Elladj            (data-index="9") — elladj_thumb.jpg + elladj_loop.mp4,      links to elladj2.html
 
 
 ===============================================================
