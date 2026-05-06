@@ -255,19 +255,19 @@ nav {
 .proj-card:nth-child(4n+3) {
   margin-top: 0;
 }
-.proj-card:nth-child(1) {
+.proj-card[data-index="1"] {
   height: 338px;
   margin-top: 0;
   margin-left: 0;
 }
-.proj-card:nth-child(2) {
+.proj-card[data-index="2"] {
   flex-basis: 32%;
   height: 460px;
   margin-top: 160px;
   margin-left: 160px;
   margin-bottom: 50px;
 }
-.proj-card:nth-child(5) {
+.proj-card[data-index="5"] {
   height: 252px;
 }
 
@@ -339,9 +339,9 @@ nav {
   opacity: 0;
   pointer-events: none;
 }
-.proj-card:nth-child(9) .proj-thumb img { object-position: center center; }
-.proj-card:nth-child(9) .proj-video    { object-position: center center; }
-.proj-card:nth-child(1) .proj-video {
+.proj-card[data-index="9"] .proj-thumb img { object-position: center center; }
+.proj-card[data-index="9"] .proj-video    { object-position: center center; }
+.proj-card[data-index="1"] .proj-video {
   opacity: 1;
 }
 .proj-card:hover .proj-video {
@@ -386,8 +386,8 @@ nav {
 }
 .proj-runtime {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 13px;
   color: var(--mid);
 }
 
@@ -539,7 +539,7 @@ footer {
 /* ─── Responsive ─── */
 @media (max-width: 680px) {
   .projects-grid { grid-template-columns: 1fr; }
-  .proj-card:nth-child(2) { margin-top: 0; }
+  .proj-card[data-index="2"] { margin-top: 0; }
   .about-section { grid-template-columns: 1fr; }
   #hero-text { font-size: 44px; }
 }
@@ -767,13 +767,13 @@ footer {
     margin-left: 0 !important;
   }
 
-  .proj-card:nth-child(1) {
+  .proj-card[data-index="1"] {
     height: 220px !important;
     margin-top: 0 !important;
     margin-left: 0 !important;
   }
 
-  .proj-card:nth-child(2) {
+  .proj-card[data-index="2"] {
     flex-basis: 34% !important;
     height: 320px !important;
     margin-top: 120px !important;
@@ -788,7 +788,7 @@ footer {
     margin-top: 0 !important;
   }
 
-  .proj-card:nth-child(5) {
+  .proj-card[data-index="5"] {
     height: 180px !important;
   }
 
@@ -958,9 +958,9 @@ footer {
   }
 
   /* Reset desktop per-card height overrides */
-  .proj-card:nth-child(1),
-  .proj-card:nth-child(2),
-  .proj-card:nth-child(5) {
+  .proj-card[data-index="1"],
+  .proj-card[data-index="2"],
+  .proj-card[data-index="5"] {
     height: auto !important;
   }
 
@@ -971,17 +971,17 @@ footer {
   }
 
   /* CARD 1 ELLADJ — landscape */
-  .projects-grid .proj-card:nth-child(1) .proj-thumb {
+  .projects-grid .proj-card[data-index="1"] .proj-thumb {
     height: 220px !important;
   }
 
   /* CARD 2 JASMINE — portrait */
-  .projects-grid .proj-card:nth-child(2) .proj-thumb {
+  .projects-grid .proj-card[data-index="2"] .proj-thumb {
     height: 340px !important;
   }
 
   /* SHU CARD — panoramic */
-  .projects-grid .proj-card:nth-child(5) .proj-thumb {
+  .projects-grid .proj-card[data-index="5"] .proj-thumb {
     height: 180px !important;
   }
 
