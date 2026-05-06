@@ -354,6 +354,8 @@ nav {
 .proj-thumb-inner {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   transition: transform .75s cubic-bezier(.25,.46,.45,.94);
 }
 .proj-card:hover .proj-thumb-inner { transform: scale(1.05); }
@@ -621,6 +623,7 @@ footer {
 
 .proj-desc-block {
   display: flex;
+  flex-direction: column;
   gap: 60px;
   align-items: flex-start;
 }
