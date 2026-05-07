@@ -341,6 +341,15 @@ nav {
 }
 .proj-card[data-index="9"] .proj-thumb img { object-position: center center; }
 .proj-card[data-index="9"] .proj-video    { object-position: center center; }
+.proj-card[data-index="9"] {
+  max-width: 720px;
+}
+.proj-card[data-index="8"] .proj-thumb img {
+  object-position: center bottom;
+}
+.proj-card[data-index="8"] .proj-video {
+  object-position: center bottom;
+}
 .proj-card[data-index="1"] .proj-video {
   opacity: 1;
 }
