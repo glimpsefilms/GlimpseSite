@@ -40,6 +40,14 @@ SESSION STARTUP — PASTE INTO CC AT THE START OF EVERY SESSION
   - style.css
   - main.js
   - elladj.html
+  - jasmine.html
+  - momo.html
+  - shu.html
+  - sondre.html
+  - annika.html
+  - mattshilan.html
+  - austinfarwell.html
+  - elladj2.html
   - vite.config.js
 
   Do not make any changes yet. Just confirm the server is running
@@ -164,27 +172,28 @@ PROJECTS SECTION
 CARDS
 - .proj-thumb: overflow hidden, width 100%, height 100%
 - .proj-thumb-inner: position absolute, inset 0
-- Placeholder boxes: darker fill, image icon + label
-- Card 1 (Elladj / Wild Ice): autoplay looping video /assets/ElladjPreview.mp4 (no still),
+- All 9 cards have real thumbnails and real hover videos (no placeholder boxes left)
+- Card 1 (Wild Ice / Elladj):  runtime 19:41,    autoplay looping video /assets/ElladjPreview.mp4 (no still),
                               links to elladj.html
-- Card 2 (Jasmine):           thumb /assets/jasmine-thumb.jpg + hover video /assets/jasmine_loop.mp4,
+- Card 2 (The Process / Jasmine): runtime 1:03,  thumb /assets/jasmine-thumb.jpg + hover video /assets/jasmine_loop.mp4,
                               links to jasmine.html
-- Card 3 (Momo):              thumb /assets/MomoSmall.jpg + hover video /assets/momo-loop.mp4,
+- Card 3 (Can Fly / Momo):     runtime 2:20,     thumb /assets/MomoSmall.jpg + hover video /assets/momo-loop.mp4,
                               links to momo.html
-- Card 4 (Sondre):            thumb /assets/sondre_thumb.jpg + hover video /assets/SONDRE_loop.mp4,
+- Card 4 (The Road to Paris / Sondre): runtime 3:17, thumb /assets/sondre_thumb.jpg + hover video /assets/SONDRE_loop.mp4,
                               links to sondre.html
-- Card 5 (Shu):               thumb /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4,
+- Card 5 (木ノ内 周 / Shu):    runtime 3:39,     thumb /assets/ShuSmall.jpg + hover video /assets/ShuPreview.mp4,
                               links to shu.html
-- Card 6 (Annika):            thumb /assets/Annika_thumb4x5.jpg + hover video /assets/Annika_loop_4x5.mp4,
+- Card 6 (Where She Lands / Annika): runtime 9:52, thumb /assets/Annika_thumb4x5.jpg + hover video /assets/Annika_loop_4x5.mp4,
                               links to annika.html
-- Card 7 (Matt Shilan):       thumb /assets/matt_thumb.jpg + hover video /assets/matt_loop.mp4,
+- Card 7 (It Starts With a Fold / Matt Shlian): runtime 4:49, thumb /assets/matt_thumb.jpg + hover video /assets/matt_loop.mp4,
                               links to mattshilan.html
-- Card 8 (Austin Farwell):    thumb /assets/Austin_thumb.jpg + hover video /assets/Austin_loop.mp4,
+- Card 8 (The Shared Language / Austin Farwell): runtime PENDING (locked cut not yet delivered),
+                              thumb /assets/Austin_thumb.jpg + hover video /assets/Austin_loop.mp4,
                               links to austinfarwell.html
-- Card 9 (Elladj):            thumb /assets/elladj_thumb.jpg + hover video /assets/elladj_loop.mp4,
+- Card 9 (Elladj Baldé):       runtime 6:00,     thumb /assets/elladj_thumb.jpg + hover video /assets/elladj_loop.mp4,
                               links to elladj2.html
 - Hover: image scales 1.05, dark overlay fades in, hover video crossfades over still
-- .proj-meta: project name + index number below card
+- .proj-meta: project name + runtime label, vertical text to the left of each card
 
 GRAIN
 - Tuned up: more present, denser texture
@@ -222,33 +231,32 @@ PROJECT PAGES
 - vercel.json sets cleanUrls: true so /elladj, /momo, etc. work without
   the .html suffix on the deployed site.
 
-TEMPLATE STRUCTURE (every project page)
+TEMPLATE STRUCTURE (every project page — uniform on all 9)
 - .proj-page-wrap (flex container)
     .left-reel (sticky sidebar, desktop only)
       - Glimpse logo (links home)
       - "Info" link (links to /#about)
     .content-wrapper
       - Top "← BACK TO PROJECTS" link
-      - <h1 class="proj-title">
-      - <img class="proj-photo-main"> (or no src for placeholder block)
+      - .proj-video-embed   ← Vimeo iframe (16:9 / 4:3 / cinemascope padding hack)
+      - <script src="https://player.vimeo.com/api/player.js"></script>
+      - <h1 class="proj-title">   ← sits BELOW the video embed on every page
       - .proj-desc-block
-          .proj-type     — directed/produced credit line
           p.proj-text    — body copy
       - dl.proj-credits  — role/name pairs in two-column grid
       - Bottom "← BACK TO PROJECTS" link
 
-CONTENT STATUS
-- elladj.html       — REAL: title "Wild Ice: Elladj Baldé", real body copy,
-                      full 11-row credits block. Vimeo embed (replaces still image).
-- momo.html         — Vimeo embed (replaces still image). Placeholder copy and
-                      credits awaiting client content.
-- jasmine.html      — Placeholder copy and credits awaiting client content.
-- shu.html          — Placeholder copy and credits awaiting client content.
-- sondre.html       — Placeholder copy and credits awaiting client content.
-- annika.html       — Placeholder copy and credits awaiting client content.
-- mattshilan.html   — Placeholder copy and credits awaiting client content.
-- austinfarwell.html — Placeholder copy and credits awaiting client content.
-- elladj2.html      — Placeholder copy and credits awaiting client content.
+CONTENT STATUS — all 9 project pages have real copy, real credits, and a
+Vimeo embed. Title sits below the embed on every page.
+- elladj.html        — Wild Ice: Elladj Baldé          — Vimeo 1185701945  (16:9)
+- jasmine.html       — Jasmine: The Process            — Vimeo 1190142704  (4:3)
+- momo.html          — Momo: Can Fly                   — Vimeo 908003028   (16:9)
+- shu.html           — 木ノ内 周 (Shu Kinouchi)         — Vimeo 717578780   (16:9)
+- sondre.html        — Sondre: The Road to Paris       — Vimeo 1190141269  (4:3)
+- annika.html        — Annika: Where She Lands         — Vimeo 1055408531  (16:9)
+- mattshilan.html    — Matt Shlian: It Starts With a Fold — Vimeo 1081979669 (~17:9, padding 52.73%)
+- austinfarwell.html — Austin Farwell: The Shared Language — Vimeo 1190152395 (16:9)
+- elladj2.html       — Elladj Baldé                    — Vimeo 1190196157  (4:3)
 
 RESPONSIVE
 - Desktop (>1100px): two-column with sticky left-reel sidebar
@@ -284,16 +292,9 @@ DONE
 - Mobile + tablet responsive pass on project pages.
 
 REMAINING (in priority order)
-1. Fill in copy and credits for all 8 placeholder project pages
-   (jasmine, momo, shu, sondre, annika, mattshilan, austinfarwell, elladj2)
-   — in progress, client supplying content
-
-2. Vimeo embeds for remaining project pages (elladj and momo done;
-   jasmine, shu, sondre, annika, mattshilan, austinfarwell, elladj2 outstanding)
-
-3. Custom domain setup on Vercel
-
-4. Final QA pass before launch
+1. Austin Farwell runtime (pending locked cut)
+2. Custom domain setup on Vercel
+3. Final QA pass before launch
 
 
 ----------------------------------------------------------------
@@ -309,6 +310,10 @@ KEY RULES FOR CC — DO NOT VIOLATE THESE
 - Vite serves public/ at root — reference files as /assets/filename
 - Do not touch glimpse.html — it is the original reference only
 - Do not use CSS grid for the projects layout — it must stay flex
+- Per-card CSS overrides use [data-index="N"] selectors, not
+  :nth-child(N). Cards can be freely reordered in index.html
+  without touching style.css. Pattern rules (odd/even, 4n+3,
+  4n+4) still use nth-child and respond to DOM position.
 
 
 ----------------------------------------------------------------
@@ -353,18 +358,19 @@ Row-2 margin overrides:
     margin-top: 0;
   }
 
-Explicit per-card overrides (current DOM order):
+Explicit per-card overrides — order-independent ([data-index="N"]):
 
-  /* Card 1 — Elladj. Inherits odd's flex-basis: 50%, overrides height,
-     resets margins so first card sits flush. */
-  .proj-card:nth-child(1) {
+  /* Wild Ice — data-index="1". Inherits odd's flex-basis: 50%, overrides
+     height, resets margins so first card sits flush. */
+  .proj-card[data-index="1"] {
     height: 338px;
     margin-top: 0;
     margin-left: 0;
   }
 
-  /* Card 2 — Jasmine. Matches even pattern explicitly + adds bottom margin. */
-  .proj-card:nth-child(2) {
+  /* The Process / Jasmine — data-index="2". Matches even pattern
+     explicitly + adds bottom margin (decoupled from DOM position). */
+  .proj-card[data-index="2"] {
     flex-basis: 32%;
     height: 460px;
     margin-top: 160px;
@@ -372,22 +378,39 @@ Explicit per-card overrides (current DOM order):
     margin-bottom: 50px;
   }
 
-  /* Card 5 — Shu. Inherits odd's flex-basis: 50%, overrides height
-     to a shorter panoramic ratio. */
-  .proj-card:nth-child(5) {
+  /* Shu — data-index="5". Inherits odd's flex-basis: 50%, overrides
+     height to a shorter panoramic ratio. */
+  .proj-card[data-index="5"] {
     height: 252px;
   }
 
-DOM ORDER (index.html)
-  1. Wild Ice (Elladj) (data-index="1") — autoplay video ElladjPreview.mp4,          links to elladj.html
-  2. Jasmine           (data-index="2") — jasmine-thumb.jpg + jasmine_loop.mp4,      links to jasmine.html
-  3. Momo              (data-index="3") — MomoSmall.jpg + momo-loop.mp4,             links to momo.html
-  4. Sondre            (data-index="4") — sondre_thumb.jpg + SONDRE_loop.mp4,        links to sondre.html
-  5. Shu               (data-index="5") — ShuSmall.jpg + ShuPreview.mp4,             links to shu.html
-  6. Annika            (data-index="6") — Annika_thumb4x5.jpg + Annika_loop_4x5.mp4, links to annika.html
-  7. Matt Shilan       (data-index="7") — matt_thumb.jpg + matt_loop.mp4,            links to mattshilan.html
-  8. Austin Farwell    (data-index="8") — Austin_thumb.jpg + Austin_loop.mp4,        links to austinfarwell.html
-  9. Elladj            (data-index="9") — elladj_thumb.jpg + elladj_loop.mp4,        links to elladj2.html
+  /* Austin Farwell — data-index="8". Anchor still + hover video to
+     center bottom so framing matches between still and loop. */
+  .proj-card[data-index="8"] .proj-thumb img,
+  .proj-card[data-index="8"] .proj-video {
+    object-position: center bottom;
+  }
+
+  /* Elladj Baldé — data-index="9". Cap card width and re-center crop
+     (this card is wider than the others). */
+  .proj-card[data-index="9"] {
+    max-width: 720px;
+  }
+  .proj-card[data-index="9"] .proj-thumb img,
+  .proj-card[data-index="9"] .proj-video {
+    object-position: center center;
+  }
+
+DOM ORDER (index.html — DOM position no longer matches data-index)
+  Position 1 — data-index 1 — Wild Ice                — elladj.html        — runtime 19:41
+  Position 2 — data-index 6 — Where She Lands         — annika.html        — runtime 9:52
+  Position 3 — data-index 3 — Can Fly                 — momo.html          — runtime 2:20
+  Position 4 — data-index 2 — The Process             — jasmine.html       — runtime 1:03
+  Position 5 — data-index 7 — It Starts With a Fold   — mattshilan.html    — runtime 4:49
+  Position 6 — data-index 4 — The Road to Paris       — sondre.html        — runtime 3:17
+  Position 7 — data-index 5 — 木ノ内 周 / Shu          — shu.html           — runtime 3:39
+  Position 8 — data-index 8 — The Shared Language     — austinfarwell.html — runtime PENDING
+  Position 9 — data-index 9 — Elladj Baldé            — elladj2.html       — runtime 6:00
 
 
 ===============================================================
