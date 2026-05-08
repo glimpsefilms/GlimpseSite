@@ -111,6 +111,71 @@ const io = new IntersectionObserver((entries) => {
 
 cards.forEach(c => io.observe(c));
 
+/* ── Title scramble reveal ── */
+(function () {
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&?';
+  const SCRAMBLE_DURATION = 120;
+  const FRAME_INTERVAL = 30;
+  const STAGGER = 150;
+
+  function scrambleElement(el, delay) {
+    const original = el.textContent;
+    setTimeout(() => {
+      el.style.visibility = 'visible';
+      let charIndex = 0;
+      function scrambleChar() {
+        if (charIndex >= original.length) {
+          el.textContent = original;
+          return;
+        }
+        if (original[charIndex] === ' ') {
+          charIndex++;
+          scrambleChar();
+          return;
+        }
+        let elapsed = 0;
+        const interval = setInterval(() => {
+          const html = original.split('').map((char, i) => {
+            if (i < charIndex) return char;
+            if (i === charIndex) {
+              const glyph = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+              return `<span style="background:#0a0a0a;color:#c8c5bf;padding:0 1px;">${glyph}</span>`;
+            }
+            return '<span style="visibility:hidden;">' + char + '</span>';
+          }).join('');
+          el.innerHTML = html;
+          elapsed += FRAME_INTERVAL;
+          if (elapsed >= SCRAMBLE_DURATION) {
+            clearInterval(interval);
+            charIndex++;
+            scrambleChar();
+          }
+        }, FRAME_INTERVAL);
+      }
+      scrambleChar();
+    }, delay);
+  }
+
+  const titles = document.querySelectorAll('.proj-name');
+  const runtimes = document.querySelectorAll('.proj-runtime');
+  const allElements = [...titles, ...runtimes];
+  if (!allElements.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = Array.from(titles).indexOf(entry.target);
+        const runtimeIndex = Array.from(runtimes).indexOf(entry.target);
+        const delay = index >= 0 ? index * STAGGER : runtimeIndex * STAGGER;
+        scrambleElement(entry.target, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  allElements.forEach(t => observer.observe(t));
+})();
+
 /* ── Video hover previews ── */
 document.querySelectorAll('.proj-card:not(:nth-child(1))').forEach(card => {
   const video = card.querySelector('.proj-video');

@@ -392,12 +392,14 @@ nav {
   letter-spacing: .06em;
   color: var(--ink);
   text-transform: uppercase;
+  visibility: hidden;
 }
 .proj-runtime {
   font-family: 'Open Sans', sans-serif;
   font-weight: 500;
   font-size: 13px;
   color: var(--mid);
+  visibility: hidden;
 }
 
 .proj-card {
