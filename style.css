@@ -635,7 +635,7 @@ footer {
 .proj-desc-block {
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 16px;
   align-items: flex-start;
 }
 
@@ -658,6 +658,7 @@ footer {
   line-height: 1.7;
   color: var(--graphite);
   max-width: 600px;
+  margin-bottom: 0.75em;
 }
 
 .proj-photo-main {
